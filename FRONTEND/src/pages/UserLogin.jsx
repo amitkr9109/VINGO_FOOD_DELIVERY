@@ -72,17 +72,19 @@ const UserLogin = () => {
 
 
   const handleGoogleAuth = async () => {
-    setLoading(true)
+    
     setError("");
+    setLoading(true)
     const provider = new GoogleAuthProvider();
-  
-    const result = await signInWithPopup(auth, provider);
-  
-    const newData = {
-      email: result.user.email,
-    }
       
     try {  
+
+      const result = await signInWithPopup(auth, provider);
+  
+      const newData = {
+        email: result.user.email,
+      }
+
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/google-login`, newData, { withCredentials: true });
       dispatch(setUserData(response.data));
       navigate("/home");

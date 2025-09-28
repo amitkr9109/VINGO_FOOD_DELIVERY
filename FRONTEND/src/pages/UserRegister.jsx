@@ -79,18 +79,22 @@ const UserRegister = () => {
 
 
   const handleGoogleAuth = async () => {
-    setLoading(true);
     setError("");
+    setLoading(true);
+    
     if(!mobileNo) {
       toast.error("Mobile no is requird");
+      setLoading(false);
       return;
     }
     if (mobileNo.length !== 10) {
       toast.error("Mobile no must be 10 digits");
+      setLoading(false);
       return;
     }
     if (!role) {
       toast.error("Role is required");
+      setLoading(false);
       return;
     }
     const provider = new GoogleAuthProvider();
