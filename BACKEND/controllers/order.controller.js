@@ -356,7 +356,7 @@ const updateOrderStatusController = async (req, res) => {
                     orderId: order._id,
                     shopId: updatedShopOrder.shop._id,
                     status: updatedShopOrder.status,
-                    userId: order.user._id
+                    userId: order.user?._id
                 })
             }
         }
@@ -608,7 +608,7 @@ const verifyDeliveryOTPController = async (req, res) => {
                 orderId: order._id,
                 shopId: shopOrder.shop,
                 status: "delivered",
-                userId: order.user._id
+                userId: order.user?._id
             });
         }
 
