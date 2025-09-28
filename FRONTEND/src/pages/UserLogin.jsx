@@ -58,12 +58,12 @@ const UserLogin = () => {
         }
         else {
           setError(["Something went wrong"]);
-          toast.err(["Something went wrong"]);
+          toast.error(["Something went wrong"]);
         }
       }
       else {
         setError(["Server not responding"]);
-        toast.err(["Server not responding"]);
+        toast.error(["Server not responding"]);
       }
     } finally {
       setLoading(false);
