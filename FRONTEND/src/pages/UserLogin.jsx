@@ -44,10 +44,8 @@ const UserLogin = () => {
 
       setEmail("");
       setPassword("");
-      setLoading(false);
 
     } catch (err) {
-      setLoading(false);
       if(err.response && err.response.data) {
         if(Array.isArray(err.response.data.errors)) {
           const validationMessages = err.response.data.errors.map(user => user.msg);
@@ -67,6 +65,8 @@ const UserLogin = () => {
         setError(["Server not responding"]);
         toast.err(["Server not responding"]);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -87,9 +87,7 @@ const UserLogin = () => {
       dispatch(setUserData(response.data));
       navigate("/home");
       toast.success("Login successfully by google");
-      setLoading(false);
     } catch (err) {
-      setLoading(false);
       if(err.response && err.response.data) {
         if(Array.isArray(err.response.data.errors)) {
           const validationMessages = err.response.data.errors.map(user => user.msg);
@@ -109,6 +107,8 @@ const UserLogin = () => {
         setError(["Server not responding"]);
         toast.error("Server not responding");
       }
+    } finally {
+      setLoading(false);
     }
   }
 

@@ -46,9 +46,8 @@ const UserRegister = () => {
         
         navigate("/home");
         toast.success("Register successfully !");
-        setLoading(false);
+
     } catch (err) {
-      setLoading(false);
       if(err.response && err.response.data) {
         if(Array.isArray(err.response.data.errors)) {
           const validationMessages = err.response.data.errors.map(user => user.msg);
@@ -68,6 +67,8 @@ const UserRegister = () => {
         setError(["Server not responding"]);
         toast.error("Server not responding");
       }
+    } finally {
+      setLoading(false);
     }
 
     setFullName("");
@@ -108,9 +109,7 @@ const UserRegister = () => {
       dispatch(setUserData(response.data));
       navigate("/home");
       toast.success("Register successfully by google");
-      setLoading(false);
     } catch (err) {
-      setLoading(false);
       if(err.response && err.response.data) {
         if(Array.isArray(err.response.data.errors)) {
           const validationMessages = err.response.data.errors.map(user => user.msg);
@@ -130,6 +129,8 @@ const UserRegister = () => {
         setError(["Server not responding"]);
         toast.error("Server not responding");
       }
+    } finally {
+      setLoading(false);
     }
   }
 
