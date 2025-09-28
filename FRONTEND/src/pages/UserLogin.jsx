@@ -72,47 +72,43 @@ const UserLogin = () => {
 
 
   const handleGoogleAuth = async () => {
-    
     setError("");
-    setLoading(true)
+    setLoading(true);
     const provider = new GoogleAuthProvider();
-      
-    try {  
 
+    try {
       const result = await signInWithPopup(auth, provider);
-  
-      const newData = {
-        email: result.user.email,
-      }
+
+      const newData = { email: result.user.email };
 
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/google-login`, newData, { withCredentials: true });
+
       dispatch(setUserData(response.data));
       navigate("/home");
       toast.success("Login successfully by google");
     } catch (err) {
-      if(err.response && err.response.data) {
-        if(Array.isArray(err.response.data.errors)) {
+
+      if (err.response && err.response.data) {
+        if (Array.isArray(err.response.data.errors)) {
           const validationMessages = err.response.data.errors.map(user => user.msg);
           setError(validationMessages);
           validationMessages.forEach(msg => toast.error(msg));
-        }
-        else if(err.response.data.message) {
+        } else if (err.response.data.message) {
           setError([err.response.data.message]);
           toast.error(err.response.data.message);
-        }
-        else{
+        } else {
           setError(["Something went wrong"]);
           toast.error("Something went wrong");
         }
-      }
-      else{
+      } else {
         setError(["Server not responding"]);
         toast.error("Server not responding");
       }
     } finally {
       setLoading(false);
     }
-  }
+  };
+
 
   return (
     <>
