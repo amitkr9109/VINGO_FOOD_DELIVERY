@@ -147,13 +147,6 @@ const UserLogin = () => {
                 <Link to="/forgot-password" className='text-[#ff4d2d] cursor-pointer active:scale-95'>Forgot password</Link>
               </div>
             </div>
-            {error.length > 0 && (
-              <div className='text-red-500 text-center text-sm mt-2'>
-                {error.map((errmsg, idx) => (
-                  <div key={idx}>{errmsg}</div>
-                ))}
-              </div>
-            )}
             <button onClick={() => submitHandler()} className='bg-[#ff4d2d] text-white uppercase py-2 rounded-md cursor-pointer active:scale-95 mt-[20vh] transition-all hover:bg-[#e64323]' disabled={loading}>
               {loading ? <ClipLoader size={20} color='white' /> : "log in"}
             </button>
