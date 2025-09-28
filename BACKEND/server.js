@@ -8,7 +8,10 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: true,
+        origin: [
+            "https://vingo-food-delivery-frontend.onrender.com",
+            "http://localhost:5173"
+        ],
         credentials: true,
     }
 });

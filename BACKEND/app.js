@@ -10,7 +10,10 @@ const itemRoutes = require("./routes/item.route");
 const orderRoutes = require("./routes/order.route");
 
 app.use(cors({
-    origin: true,
+    origin: [
+        "https://vingo-food-delivery-frontend.onrender.com",
+        "http://localhost:5173"
+    ],
     credentials: true
 }));
 app.use(express.json());
