@@ -7,6 +7,7 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from '../../utils/firebase'
 import { useDispatch } from 'react-redux'
 import { setUserData } from '../redux/userSlice'
+import { ClipLoader } from 'react-spinners'
 
 
 const UserRegister = () => {
@@ -18,6 +19,7 @@ const UserRegister = () => {
   const [mobileNo, setMobileNo] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -26,6 +28,7 @@ const UserRegister = () => {
   const submitHandler = async () => {
 
     setError("");
+    setLoading(true);
     const newData = {
       fullName,
       email,
@@ -43,8 +46,9 @@ const UserRegister = () => {
         
         navigate("/home");
         toast.success("Register successfully !");
-     
+        setLoading(false);
     } catch (err) {
+      setLoading(false);
       if(err.response && err.response.data) {
         if(Array.isArray(err.response.data.errors)) {
           const validationMessages = err.response.data.errors.map(user => user.msg);
@@ -74,6 +78,7 @@ const UserRegister = () => {
 
 
   const handleGoogleAuth = async () => {
+    setLoading(true);
     setError("");
     if(!mobileNo) {
       toast.error("Mobile no is requird");
@@ -103,7 +108,9 @@ const UserRegister = () => {
       dispatch(setUserData(response.data));
       navigate("/home");
       toast.success("Register successfully by google");
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       if(err.response && err.response.data) {
         if(Array.isArray(err.response.data.errors)) {
           const validationMessages = err.response.data.errors.map(user => user.msg);
@@ -197,14 +204,18 @@ const UserRegister = () => {
                 ))}
               </div>
             )}
-            <button onClick={() => submitHandler()} className='bg-[#ff4d2d] text-white uppercase py-2 rounded-md cursor-pointer active:scale-95 mt-5 transition-all hover:bg-[#e64323]'>sign up</button>
+            <button onClick={() => submitHandler()} className='bg-[#ff4d2d] text-white uppercase py-2 rounded-md cursor-pointer active:scale-95 mt-5 transition-all hover:bg-[#e64323]' disabled={loading}>
+              {loading ? <ClipLoader size={20} color='white' /> : "sign up"}
+            </button>
           </div>
           <div className="line-container flex items-center mt-2 mb-2">
             <div className="line1 w-[35vw] h-[0.5px] bg-black"></div>
               <div className="middle px-2 py-0.5 border border-black rounded-md">OR</div>
             <div className="line2 w-[35vw] h-[0.5px] bg-black"></div>
           </div>
-          <button onClick={handleGoogleAuth} className='border border-gray-200 py-2 rounded-md cursor-pointer active:scale-95 w-full flex items-center justify-center gap-5 transition-all hover:bg-gray-200'><FcGoogle /> Sign Up with Google</button>
+          <button onClick={handleGoogleAuth} className='border border-gray-200 py-2 rounded-md cursor-pointer active:scale-95 w-full flex items-center justify-center gap-5 transition-all hover:bg-gray-200' disabled={loading}><FcGoogle />
+            {loading ? <ClipLoader size={20} color='white' /> : "Sign Up with Google"}
+          </button>
           <p className='font-medium text-lg opacity-75'>
             Already have an account?   
             <Link to="/"><span className='text-blue-700 underline active:scale-95 text-lg'> Log in</span></Link>
