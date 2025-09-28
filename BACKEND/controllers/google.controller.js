@@ -25,7 +25,11 @@ const googleAuthRegisterController = async (req, res, next) => {
        }
 
        const token = user.generateAuthToken();
-       res.cookie("token", token);
+       res.cookie("token", token, {
+        httpOnly: true,
+        secure: true, 
+        sameSite: "none"
+       });
 
        return res.status(200).json(user);
 

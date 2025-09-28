@@ -63,7 +63,11 @@ const loginUserController = async (req, res, next) => {
 
         const token = user.generateAuthToken();
 
-        res.cookie("token", token);
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true, 
+            sameSite: "none"
+        });
 
         res.status(200).json({ message: "User login successfully", user, token });
 
