@@ -14,26 +14,39 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-
 const sendOtpMail = async (to, otp) => {
-  await transporter.sendMail({
-    from: config.EMAIL,
-    to,
-    subject: "Reset Your Password",
-    html: `<p>Your OTP for password reset is <b>${otp}</b>. It expires in 5 minutes.</p>`
-  })
+  try {
+    const info = await transporter.sendMail({
+      from: `"Vingo Food" <${config.EMAIL}>`,
+      to,
+      subject: "Reset Your Password",
+      html: `<p>Your OTP for password reset is <b>${otp}</b>. It expires in 5 minutes.</p>`
+    });
+    console.log("✅ OTP Mail sent:", info.messageId);
+    return info;
+  } catch (error) {
+    console.error("❌ Error sending OTP mail:", error);
+    throw error;
+  }
 };
 
 const sendDeliveryOtpMail = async (user, otp) => {
-  await transporter.sendMail({
-    from: config.EMAIL,
-    to: user.email,
-    subject: "Delivery OTP",
-    html: `<p>Your OTP for delivery otp is <b>${otp}</b>. It expires in 5 minutes.</p>`
-  })
+  try {
+    const info = await transporter.sendMail({
+      from: `"Vingo Food" <${config.EMAIL}>`,
+      to: user.email,
+      subject: "Delivery OTP",
+      html: `<p>Your OTP for delivery is <b>${otp}</b>. It expires in 5 minutes.</p>`
+    });
+    console.log("✅ Delivery Mail sent:", info.messageId);
+    return info;
+  } catch (error) {
+    console.error("❌ Error sending Delivery mail:", error);
+    throw error;
+  }
 };
 
 module.exports = {
   sendOtpMail,
   sendDeliveryOtpMail,
-}
+};
