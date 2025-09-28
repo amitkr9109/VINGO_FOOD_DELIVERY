@@ -14,7 +14,9 @@ const EditShop = () => {
 
   const navigate = useNavigate("");
 
-  const { myShopData } = useSelector(state => state.owner);
+  const ownerState = useSelector(state => state.owner) || {};
+  const { myShopData = [] } = ownerState;
+
   
   const shopdetails = myShopData.find(shop => shop._id === id);
 

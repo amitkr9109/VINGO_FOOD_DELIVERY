@@ -37,7 +37,7 @@ const userSlice = createSlice({
         },
         addToCart: (state, action) => {
             const cartItem = action.payload
-            const existingItem = state.cartItems.find(item => item.id == cartItem.id)
+            const existingItem = state.cartItems.find(item => item?.id == cartItem.id)
             if(existingItem) {
                 existingItem.quantity += cartItem.quantity
             }
@@ -51,7 +51,7 @@ const userSlice = createSlice({
         },
         updateQuantity: (state, action) => {
             const { id, quantity } = action.payload
-            const items = state.cartItems.find(item => item.id == id);
+            const items = state.cartItems.find(item => item?.id == id);
             if(items) {
                 items.quantity = quantity
             }
@@ -63,7 +63,7 @@ const userSlice = createSlice({
         removeCartItem: (state, action) => {
             const confirm = window.confirm("Are you sure you want to delete this item?");
             if (!confirm) return;
-            state.cartItems = state.cartItems.filter(item => item.id !== action.payload);
+            state.cartItems = state.cartItems.filter(item => item?.id !== action.payload);
             state.totalAmount = state.cartItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
 
             localStorage.setItem("cart", JSON.stringify(state.cartItems));
@@ -78,9 +78,9 @@ const userSlice = createSlice({
         },
         updateOrderStatus: (state, action) => {
             const { orderId, shopId, status } = action.payload;
-            const order = state.myOrders.find(odr => odr._id === orderId);
+            const order = state.myOrders.find(odr => odr?._id === orderId);
             if(order) {
-                const shopOrder = order.shopOrders.find(odr => odr.shop._id === shopId);
+                const shopOrder = order.shopOrders.find(odr => odr?.shop?._id === shopId);
                 if(shopOrder) {
                     shopOrder.status = status;
                     localStorage.setItem("order", JSON.stringify(state.myOrders));
@@ -95,12 +95,12 @@ const userSlice = createSlice({
             state.socket = action.payload;
         },
         socketRemoveCartItemDeleteByOwner: (state, action) => {
-            state.cartItems = state.cartItems.filter(item => item.id !== action.payload && item._id !== action.payload);
+            state.cartItems = state.cartItems.filter(item => item?.id !== action.payload && item?._id !== action.payload);
             state.totalAmount = state.cartItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
             localStorage.setItem("cart", JSON.stringify(state.cartItems));
         },    
         socketDeleteMyOrder: (state, action) => {
-            state.myOrders = state.myOrders.filter(order => order._id !== action.payload);
+            state.myOrders = state.myOrders.filter(order => order?._id !== action.payload);
             localStorage.setItem("order", JSON.stringify(state.myOrders));
         },
 

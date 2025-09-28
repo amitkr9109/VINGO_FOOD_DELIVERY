@@ -6,8 +6,12 @@ import { useNavigate } from 'react-router-dom';
 
 const OwnerNav = () => {
 
-    const { userData } = useSelector(state => state.user);
-    const { myShopData } = useSelector(state => state.owner);
+    const userState = useSelector(state => state.user) || {};
+    const { userData = null } = userState;
+
+    const ownerState = useSelector(state => state.owner) || {};
+    const { myShopData = [] } = ownerState;
+
 
     const [profileOpen, setProfileOpen] = useState(false);
 

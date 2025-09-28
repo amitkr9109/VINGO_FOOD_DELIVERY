@@ -9,7 +9,9 @@ import DeliveryBoyOrder from '../components/DeliveryBoyOrder';
 
 const MyOrders = () => {
 
-    const { myOrders, userData, socket } = useSelector(state => state.user);
+    const userState = useSelector(state => state.user) || {};
+    const { myOrders = [], userData = null, socket = null } = userState;
+
  
     const ordresArray = Array.isArray(myOrders) ? myOrders : [myOrders];
     const navigate = useNavigate();

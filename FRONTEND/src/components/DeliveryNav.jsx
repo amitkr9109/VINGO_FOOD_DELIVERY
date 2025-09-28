@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 
 const DeliveryNav = () => {
 
-    const { userData, currentCity, cartItems } = useSelector(state => state.user);
+    const userState = useSelector(state => state.user) || {};
+    const { userData = null } = userState;
 
-    const [searchPanelOpen, setSearchPanelOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
 
     const navigate = useNavigate();

@@ -7,7 +7,9 @@ import { useSelector } from 'react-redux';
 
 const UserTrackOrderPage = () => {
 
-    const { socket } = useSelector(state => state.user);
+    const userState = useSelector(state => state.user) || {};
+    const { socket = null } = userState;
+
 
     const {id} = useParams();
     const navigate = useNavigate();

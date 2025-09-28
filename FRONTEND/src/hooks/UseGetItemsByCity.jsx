@@ -9,7 +9,9 @@ const UseGetItemsByCity = () => {
 
     const [loading, setLoading] = useState(true);
 
-    const { currentCity } = useSelector(state => state.user);
+    const userState = useSelector(state => state.user) || {};
+    const { currentCity = null } = userState;
+
 
     useEffect(() => {
 

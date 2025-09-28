@@ -8,11 +8,13 @@ import { toast } from 'react-toastify';
 
 const ItemCard = ({ data }) => {
 
+  const userState = useSelector(state => state.user) || {};
+  const { cartItems = [] } = userState;
+
+
   const [quantity, setQuantity] = useState(0);
   
   const dispatch = useDispatch();
-
-  const { cartItems } = useSelector(state => state.user);
 
   const handleIncrease = () => {
     const newQuantity = quantity + 1;

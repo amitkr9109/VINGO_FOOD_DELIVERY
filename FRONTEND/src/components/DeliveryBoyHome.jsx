@@ -9,7 +9,9 @@ import { ClipLoader } from 'react-spinners';
 
 const DeliveryBoyHome = () => {
 
-  const { userData, socket } = useSelector(state => state.user);
+  const userState = useSelector(state => state.user) || {};
+  const { userData = null, socket = null } = userState;
+
 
   const [availableAssignments, setAvailableAssignments] = useState("");
   const [currentOrder, setCurrentOrder] = useState("");

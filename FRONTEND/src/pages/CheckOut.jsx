@@ -17,7 +17,8 @@ import { addMyOrder } from '../redux/userSlice';
 const CheckOut = () => {
 
     const { location, address } = useSelector(state => state.map);
-    const { cartItems, userData, totalAmount } = useSelector(state => state.user);
+    const userState = useSelector(state => state.user) || {};
+    const { cartItems = [], userData = null, totalAmount = 0 } = userState;
 
     const navigate = useNavigate("");
     const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const CheckOut = () => {
 
 
     function RecenterMap({ location }) {
-        if(location.lat && location.lon) {
+        if(location?.lat && location?.lon) {
             const map = useMap();
             map.setView([ location.lat, location.lon ], 16, { animate: true })
         }
@@ -57,8 +58,8 @@ const CheckOut = () => {
     }
 
     const getCurrentLocation = () => {
-        const latitude = userData.location.coordinates[1];
-        const longitude = userData.location.coordinates[0];
+        const latitude = userData?.location?.coordinates[1];
+        const longitude = userData?.location?.coordinates[0];
 
         dispatch(setLocation({ lat: latitude, lon: longitude }));
         getAddressByLatLng(latitude, longitude);
@@ -67,7 +68,7 @@ const CheckOut = () => {
     const getLatLngByAddress = async () => {
         try {
            const response = await axios.get(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(addressInput)}&apiKey=${apikey}`);
-           const { lat, lon } = response.data.features[0].properties;
+           const { lat, lon } = response.data.features[0]?.properties || {};
            dispatch(setLocation({ lat, lon }));
         } catch (error) {
             return error;

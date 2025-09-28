@@ -4,7 +4,9 @@ import { useSelector } from 'react-redux';
 
 const UseCurrent = () => {
 
-  const { userData } = useSelector(state => state.user);
+  const userState = useSelector(state => state.user) || {};
+  const { userData = null } = userState;
+
 
   useEffect(() => {
 

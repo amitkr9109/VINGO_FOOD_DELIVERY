@@ -10,7 +10,15 @@ import { setItemsInMyCity, setShopInMyCity } from '../redux/userSlice';
 
 const UserHome = () => {
 
-  const { currentCity, shopInMyCity, itemsInMyCity, searchItems, socket } = useSelector(state => state.user);
+  const userState = useSelector(state => state.user) || {};
+  const {
+    currentCity = null,
+    shopInMyCity = [],
+    itemsInMyCity = [],
+    searchItems = [],
+    socket = null
+  } = userState;
+
   const cateScrollRef = useRef();
   const shopScrollRef = useRef();
 

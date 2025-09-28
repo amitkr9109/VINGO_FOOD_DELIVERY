@@ -48,14 +48,14 @@ const App = () => {
     
     socketInstance.on("connect", () => {
       if(userData) {
-        socketInstance.emit("identity", { userId: userData._id });
+        socketInstance.emit("identity", { userId: userData?._id });
       }
     });
 
     return() => {
       socketInstance.disconnect();
     }
-  }, [userData._id]);
+  }, [userData?._id]);
 
   return (
     <Routes>

@@ -8,8 +8,14 @@ import { setSearchItems, socketRemoveCartItemDeleteByOwner } from '../redux/user
 
 const UserNav = () => {
 
-    const { userData, currentCity, cartItems, socket } = useSelector(state => state.user);
-
+    const userState = useSelector(state => state.user) || {};
+    const {
+        userData = null,
+        currentCity = null,
+        cartItems = [],
+        socket = null
+    } = userState;
+    
     const dispatch = useDispatch();
 
     const [searchPanelOpen, setSearchPanelOpen] = useState(false);

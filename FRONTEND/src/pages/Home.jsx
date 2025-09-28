@@ -6,7 +6,8 @@ import DeliveryBoyHome from '../components/DeliveryBoyHome';
 
 const Home = () => {
 
-  const { userData } = useSelector(state => state.user);
+  const userState = useSelector(state => state.user) || {};
+  const { userData = null } = userState;
 
   return (
     <>

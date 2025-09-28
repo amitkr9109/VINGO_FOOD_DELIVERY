@@ -5,7 +5,9 @@ import { setMyOrders } from '../redux/userSlice';
 
 const UseGetMyOrders = () => {
 
-    const { userData } = useSelector(state => state.user);
+    const userState = useSelector(state => state.user) || {};
+    const { userData = null } = userState;
+
 
     const dispatch = useDispatch();
 

@@ -11,7 +11,9 @@ import { ClipLoader } from 'react-spinners'
 const AddItem = () => {
 
   const { id } = useParams();
-  const { myShopData } = useSelector(state => state.owner);
+  const ownerState = useSelector(state => state.owner) || {};
+  const { myShopData = [] } = ownerState;
+
 
   const navigate = useNavigate("");
 
@@ -66,7 +68,7 @@ const AddItem = () => {
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/items/item-add`, formData, { withCredentials: true });
 
       const updatedShop = response.data;
-      const updatedShops = myShopData.map(shop => 
+      const updatedShops = myShopData?.map(shop => 
         shop._id === updatedShop._id ? updatedShop : shop
       );
       dispatch(setMyShopData(updatedShops));

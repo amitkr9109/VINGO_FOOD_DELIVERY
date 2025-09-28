@@ -7,9 +7,11 @@ const AllItemsPage = () => {
 
   const { id } = useParams();
 
-  const { myShopData } = useSelector(state => state.owner);
+  const ownerState = useSelector(state => state.owner) || {};
+  const { myShopData = [] } = ownerState;
 
-  const shopdetails = myShopData.find(shop => shop._id === id);
+
+  const shopdetails = myShopData.find(shop => shop?._id === id);
 
   const navigate = useNavigate();
 
@@ -34,9 +36,9 @@ const AllItemsPage = () => {
 
         {shopdetails && (
           <div className="mt-5 mb-10 w-full flex flex-col items-center gap-5 px-4">
-            {shopdetails.items.length > 0 ? (
+            {shopdetails?.items?.length > 0 ? (
               <div className="flex flex-col items-center gap-4 w-full max-w-3xl">
-                {shopdetails.items.map((item, idx) => (
+                {shopdetails?.items?.map((item, idx) => (
                   <AllItemsCard key={idx} data={item} />
                 ))}
               </div>

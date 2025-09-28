@@ -4,7 +4,9 @@ import { useSelector } from 'react-redux'
 
 const UseUpdateLocation = () => {
 
-    const { userData } = useSelector(state => state.user);
+    const userState = useSelector(state => state.user) || {};
+    const { userData = null } = userState;
+
   
     useEffect(() => {
         const updateLocation = async (lat, lon) => {

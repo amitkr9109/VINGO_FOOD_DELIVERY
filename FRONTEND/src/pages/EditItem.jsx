@@ -11,7 +11,9 @@ import { ClipLoader } from 'react-spinners'
 const EditItem = () => {
 
   const { id } = useParams();
-  const { myShopData } = useSelector(state => state.owner);
+  const ownerState = useSelector(state => state.owner) || {};
+  const { myShopData = [] } = ownerState;
+
   
   const itemDetails = myShopData
     .flatMap(shop => shop.items)

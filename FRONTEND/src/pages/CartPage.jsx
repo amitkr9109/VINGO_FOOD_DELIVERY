@@ -7,7 +7,8 @@ const CartPage = () => {
 
     const navigate = useNavigate("");
 
-    const { cartItems, totalAmount } = useSelector(state => state.user);
+    const userState = useSelector(state => state.user) || {};
+    const { cartItems = [], totalAmount = 0 } = userState;
 
   return (
     <>

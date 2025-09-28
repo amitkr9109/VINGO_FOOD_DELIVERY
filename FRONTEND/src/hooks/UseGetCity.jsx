@@ -10,12 +10,14 @@ const UseGetCity = () => {
 
     const dispatch = useDispatch();
 
-    const { userData } = useSelector(state => state.user);
+    const userState = useSelector(state => state.user) || {};
+    const { userData = null } = userState;
+
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
+        navigator?.geolocation?.getCurrentPosition(async (position) => {
+            const latitude = position?.coords?.latitude;
+            const longitude = position?.coords?.longitude;
 
             dispatch(setLocation({ lat: latitude, lon: longitude }));
             localStorage.setItem("location", JSON.stringify({ lat: latitude, lon: longitude }));

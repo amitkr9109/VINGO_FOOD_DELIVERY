@@ -8,7 +8,9 @@ import { toast } from 'react-toastify';
 
 const OwnerHome = () => {
 
-  const { myShopData } = useSelector(state => state.owner);
+  const ownerState = useSelector(state => state.owner) || {};
+  const { myShopData = [] } = ownerState;
+
 
   const navigate = useNavigate();
 

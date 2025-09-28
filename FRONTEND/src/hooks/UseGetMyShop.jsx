@@ -5,7 +5,9 @@ import { setMyShopData } from '../redux/ownerSlice'
 
 const UseGetMyShop = () => {
 
-    const { userData } = useSelector(state => state.user);
+    const userState = useSelector(state => state.user) || {};
+    const { userData = null } = userState;
+
 
     const dispatch = useDispatch();
   
