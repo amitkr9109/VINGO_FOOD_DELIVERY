@@ -153,10 +153,7 @@ const sendOtpController = async (req, res) => {
 
         await user.save();
 
-        await sendOtpMail(email, generateOtp).timeout(10000).catch(err => {
-            console.error("Timeout/Error while sending mail:", err);
-        });
-
+        await sendOtpMail(email, generateOtp);
 
         return res.status(200).json({ message: "OTP sent successfully", generateOtp });
 
