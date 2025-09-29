@@ -1,31 +1,15 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("@resend/node");
 const config = require("../config/config");
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: config.EMAIL,
-    pass: config.PASSWORD,
-  },
-});
-
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("SMTP Connection Error:", error);
-  } else {
-    console.log("SMTP Server is ready to take our messages");
-  }
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendOtpMail = async (to, otp) => {
   try {
-    await transporter.sendMail({
-      from: config.EMAIL,
+    await resend.emails.send({
+      from: config.EMAIL,   // ye wahi email hogi jo aapne verify ki hai resend pe
       to,
       subject: "Reset Your Password",
-      html: `<p>Your OTP for password reset is <b>${otp}</b>. It expires in 5 minutes.</p>`
+      html: `<p>Your OTP for password reset is <b>${otp}</b>. It expires in 5 minutes.</p>`,
     });
     console.log("OTP mail sent to:", to);
   } catch (err) {
@@ -34,17 +18,22 @@ const sendOtpMail = async (to, otp) => {
   }
 };
 
-
 const sendDeliveryOtpMail = async (user, otp) => {
-  await transporter.sendMail({
-    from: config.EMAIL,
-    to: user.email,
-    subject: "Delivery OTP",
-    html: `<p>Your OTP for delivery otp is <b>${otp}</b>. It expires in 5 minutes.</p>`
-  })
+  try {
+    await resend.emails.send({
+      from: config.EMAIL,
+      to: user.email,
+      subject: "Delivery OTP",
+      html: `<p>Your OTP for delivery is <b>${otp}</b>. It expires in 5 minutes.</p>`,
+    });
+    console.log("Delivery OTP sent to:", user.email);
+  } catch (err) {
+    console.error("Delivery mail send error:", err);
+    throw new Error("Failed to send delivery OTP");
+  }
 };
 
 module.exports = {
   sendOtpMail,
   sendDeliveryOtpMail,
-}
+};
